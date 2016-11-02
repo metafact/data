@@ -1,0 +1,12 @@
+-\newcommand{\mycmd}[2][X]{%
+
+\ensuremath{\frac{#1}{#2} = ???}%
+
+}    %{\mycmd} => name of my command; [2] => 2 arguments; [X]=> unnecessary arguments (can be
+ only one, and stands as #1 always among other arguments)
+
+
+
+
+-Kjøp og les boka “Goossens, Mittelbach, Samarin: The LATEX
+companion”, andre utgave.
