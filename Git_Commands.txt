@@ -1,0 +1,5 @@
+1. create a repo on a Remote (GitHub)
+2. git remote (must me nothing) -> otherwise 
+	2.1 git remote rm origin
+3. git remote add origin "and URL of Remote"
+4. 
