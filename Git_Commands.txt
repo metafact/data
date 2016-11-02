@@ -7,3 +7,6 @@
 * Remote repository (GitHub) and local repo operate on COMMIT level, and Stages, Commit are only in local repo
 * FORKING is a direct copy of the someone's repo on GitHub directly into my GitHub without pulling this repo 
 first into my local PC repo
+
+--git checkout -b c2832ce5788f926c390a6b5f5d5d277196894128 #returns to Older Commit and starts new Branch from 
+that Commit
