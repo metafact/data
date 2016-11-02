@@ -1,5 +1,9 @@
 1. create a repo on a Remote (GitHub)
 2. git remote (must me nothing) -> otherwise 
 	2.1 git remote rm origin
-3. git remote add origin "and URL of Remote"
-4. 
+3. git remote add origin "and URL of Remote" # This copies some repo from URL and makes it ORIGIN in our Local repo
+4. git push origin master # to push into Remote
+5. git pull origin master  # To pull changes that have been made on Remote repo but not on the local repository
+* Remote repository (GitHub) and local repo operate on COMMIT level, and Stages, Commit are only in local repo
+* FORKING is a direct copy of the someone's repo on GitHub directly into my GitHub without pulling this repo 
+first into my local PC repo
