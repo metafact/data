@@ -1,50 +1,46 @@
-rep = integer(100)
-j = 1
-for (i in 1:(length(t$Year)-1))
-{
-  if (t$Year[i] == t$Year[i+1])
-  {
-    rep[j] = i
-    j = j+1
-  }
-}
+-plot(temp$Date, temp$Wells, t = "l", xaxt = "n", ylab = "Number of Wells")
+-par (new = T)
+-plot(temp$xDate temp$Oil, t = "l", col = "red", axes = F, ylab = NA)
+-axis(1, at = temp$Date, labels = temp$Date, las = 2)
+-axis(4)
+-mtext(side = 4, line = 3, "Oil Prices")
+
+-legend("topleft",
+  legend=c(expression(-log[10](italic(p))), "N genes"),
+  lty=c(1,0), pch=c(NA, 0), col=c("red3", "black")) #lty = line type [1 = line, 2 = dotted line], pch = is for sign of the line in the legends
+
+-grid(10,10)
+- abline(v = 2007,h = 60, col = "blue") # for making grids or additional lines
+
+MERGING#VLOOKUP#MATCHING
+-dfNew = merge(df1, df2, by.x = "Year", by.y = "Date", all = T) #by.x has a title "Year" while by.y has a title "Date", all = T means that those cells that are not matched                                                                                              #still will appear in a new merged df
+
+DELETE COLUMN in DATA FRAME
+-within ( df, rm ( column_Name ) )
+
+REGEX#SUBSTRINGS#
+https://regexone.com/
+
+-grep("(.09.)", origin$DATE, perl=TRUE, value=FALSE)  #matches only those that have ".09." and return indexes not values b/c pf                                                                                                 value = FALSE
+-substring("abcd",2,3) # returns "bc"
+
+>>>>>>>>>>>>>>>>>>>>>>>ALGO>>>>>>>>>>>>>>>>
+
+- Omit useless columns [,5:40]
+- Select data that contains only dates with ."..12.Year" and not "..09.year" for examples
+- origin$Year = as.numeric( substring(origin$DATE,7,10) )
+- dif = data.frame(as.matrix( diff( df_origin)))
+- lag = df_origin[-c(1),]; returns = dif/lag
+- newdata <- df[order(df$Year),]
+- retu = df[-which(is.na(df$Year)),] # delete emty cells
+
+REGEX
+2[1-9]PIPE3[0][.]  #chooses any nuber between 21 and 29 or 30 and then dot at the end.
 
 
 
-  
 
-del2 = integer(500)
-j = 1
-for (i in 1:length(indeks))
-{
-  a = substring(t$DATE[indeks[i]+1], 7, 10)
-  b = substring(t$DATE[indeks[i]], 7, 10)
-  if (!is.na(t$PX_LAST[indeks[i]]) & (a==b))
-  {
-    del2[j] = indeks[i]
-    j = j +1
-  }
-}
--------------------
-
-for (i in 1:length(indeks))
-{
-  if (is.na(renn2$PX_LAST[indeks[i]+1]))
-  {
-    renn2$PX_LAST[indeks[i]+1] = renn2$PX_LAST[indeks[i]]
-    renn2$PX_LAST[indeks[i]] = NA
-  }
- 
-}
-
-
-
-
-for (i in 1:length(indeks))
-{
-  vec[i] = unfactor(raw$Year[indeks[i]+1])-1
-  raw$Year[indeks[i]] = vec[i]
-}
+###############
 
 d = data.frame(x =seq(1,10),
                n = c(0,0,1,2,3,4,4,5,6,6),
