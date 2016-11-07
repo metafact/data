@@ -1,3 +1,5 @@
+07.11.2016
+
 -\newcommand{\mycmd}[2][X]{%
 
 \ensuremath{\frac{#1}{#2} = ???}%
