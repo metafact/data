@@ -10,3 +10,40 @@
 
 -Kjøp og les boka “Goossens, Mittelbach, Samarin: The LATEX
 companion”, andre utgave.
+
+%%For tabular to fit the page width
+\usepackage{tabularx}
+\begin{table}[H] \centering 
+  \caption{Correlation matrix} 
+
+\BEGIN{TABULARX}\TEXTWIDTH{ XXXXXXX} %\TEXTWIDTH{ XXXXXXX}-> TO FIT TEXT WIDTH ON THE PAGE
+
+\\[-1.8ex]\hline 
+ & $r_{M,t}$ & $r_{Oil,t}$  & $r_{CF,t}$ & $r_{HR,t}$  & $r_{WHR,t}$ &$r_{HP,t}$  \\ 
+\hline \\[-1.8ex] 
+ $r_{M,t}$ & 1 &  &  &  &  \\ 
+\hline \\[-1.8ex] 
+\end{tabularx} 
+\end{table}
+
+%%%%%%%%%%Footnotes in table 
+\usepackage{threeparttable}
+\begin{table}[H]
+\begin{threeparttable}
+ \centering 
+  \caption{Measure of variables} 
+\begin{tabular}{@{\extracolsep{5pt}} lll} 
+%\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ Variable & Obtained from & Estimation \\ 
+\hline \\[-1.8ex] 
+Firm risk premium & Bloomberg & $r_{i,t} =$ firm return - 3-month US T-bill rate\\ 
+\\
+
+\hline \\[-1.8ex] 
+\end{tabular}
+\begin{tablenotes}
+            \item[a]  Oil and gas proven reserves = 1P reserves = it is probable that 90\% or more reserves are recoverable
+         \end{tablenotes}
+       \end{threeparttable}
+\end{table} 
