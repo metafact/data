@@ -1,1 +1,3 @@
 http://wiki.foonetic.net/wiki/Nickserv_Commands
+/msg NickServ identify q.
+u:Troll3
