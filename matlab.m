@@ -1,4 +1,6 @@
-d = fetch(Connect, {'SP5SOGE','SP5SIOG'}, 'PI', '12/31/1980', '12/31/2015', 'Q' ) %SP5SOGE -Exploration and Production, SP5IOG -Integrated
+
+Connect = datastream('DS:User1','Pass1','Datastream','http://dataworks.thomson.com/Dataworks/Enterprise/1.0')
+d = fetch(Connect, {'SP5SOGE','SP5SIOG', 'S&PCOMP'}, 'PI', '12/31/1980', '12/31/2015', 'Q' ) %SP5SOGE -Exploration and Production, SP5IOG -Integrated, S&PCOMP -index 500 itself, USTBL3M -US Treasury Bills 3 month, not a secondary
 
 class(a) %-class of an object a
 d(1).PI  %-Closing prices for first index
