@@ -133,6 +133,9 @@ sub615 = subset(r2, Year <=2015 & Year >= 2006)
 git615 = gls(StkPrem ~ Oil.Return + MktPremium +BOE_RESERVES_END_YR_US +CF_CASH_FROM_OPER+TOTAL_PRODUCTION_MMBOE, data = sub615,  na.action= na.exclude)
 summary(git615)
 
+#EIA data M:\Documents\MATLAB
+data = read.delim("clipboard", header = T, dec = ",")
+fit = lm(data$Weighted~data$MktPremium+data$ProdRet +data$ResRet)
 
 
 
