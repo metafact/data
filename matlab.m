@@ -23,3 +23,8 @@ txt = clipboard('paste') %returns the current contents of the clipboard as a cha
 
 data = clipboard('pastespecial') 5imports the clipboard contents into an array using uiimport.
 
+
+imp =xlsread('Bok1.xlsx') % Read excell file
+fac = imp(:,1:21) %partione
+stepwisefit(fac,imp(:,24), 'penter',0.05,'premove',0.10) %premove-factors with p value bigger than 'premove' are removed.
+%penter -variables with p value lower than 'penter' are included into regression 
