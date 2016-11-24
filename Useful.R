@@ -62,6 +62,8 @@ legend("topleft",
 
 ####################
 fil = read.delim("clipboard", dec = ",")
+#Delete first all NA or similar texts so that it is not imported as FACTORS
+fil = read.csv("Data_1.csv", header = T, dec = ",", sep = ";")
 x = grep("([.]0[1-9][.])", fil$DATE, perl = FALSE, value = F)
 zap = fil
 fil = fil[-x,]
@@ -107,6 +109,8 @@ r$Dummy = fil$Dummy[-1]
 r$Year = substring(r$Date, 7, 10)
 x = which(r$Year == "")
 r = r[-x,]
+
+oil = read.csv("Oil.csv", header = T, dec = ",", sep = ";") #Read oil data first
 r2 = merge(r, oil, by.x = "Year", by.y = "Date", all = T)
 r2$StkPrem = r2$PX_LAST -r2$Tbills 
 x = which(r2$TOTAL_PRODUCTION_MMBOE == "Inf")
