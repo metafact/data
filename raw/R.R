@@ -1,0 +1,1 @@
+setwd("\\\\home.ansatt.ntnu.no/valeriyk/System/Skrivebord/GitHub/data/raw")
