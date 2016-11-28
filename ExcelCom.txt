@@ -1,0 +1,3 @@
+INDEKS($BA$2:$BA$61;SAMMENLIGNE(AV3;$AZ$2:$AZ$61;0);1) #$BA$2:$BA$61 -> array
+SAMMENLIGNE(AV3;$AZ$2:$AZ$61;0) -> returns row number, #1 -> is column index, #AV3 ->value to look up in matrix
+#$AZ$2:$AZ$61 -> Matrix to look in, #0 -> precise value to look up

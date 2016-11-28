@@ -1,5 +1,5 @@
 fil = read.delim("clipboard", dec = ",")
-fil = read.csv("Data_1.csv", header = T, dec = ",", sep = ";")
+fil = read.csv("DataTest.csv", header = T, dec = ",", sep = ";")
 x = grep("([.]0[1-9][.])", fil$DATE, perl = FALSE, value = F)
 zap = fil
 fil = fil[-x,]
@@ -43,6 +43,10 @@ r = d/b
 r$Date =fil$DATE[-1]
 r$Dummy = fil$Dummy[-1]
 r$Year = substring(r$Date, 7, 10)
+#####
+r$RRA =fil$X[-1]
+r$Tick =fil$Tick[-1]
+#####
 x = which(r$Year == "")
 r = r[-x,]
 oil = read.csv("Oil.csv", header = T, dec = ",", sep = ";")
@@ -95,5 +99,11 @@ qplot(x,y, color = "red", geom = c("point, "smooth")) #ggplots where "geom" smoo
 g = qplot(Stk$Prem, r3$BOE_RESERVES_END_YR_US, color = "red")
 g1 = g +geom_smooth(method = "lm", color = "blue") #Adds regression line to points
 
+
+###
+subE = subset(r2, Year <2006 & RRA == "TH")
+subE = subE[,-c(1,54,48,49,47,46)]
+subE[subE > 20] = NA
+####
 
 
