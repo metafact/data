@@ -1,5 +1,5 @@
 fil = read.delim("clipboard", dec = ",")
-fil = read.csv("DataTest.csv", header = T, dec = ",", sep = ";")
+fil = read.csv("Data_1.csv", header = T, dec = ",", sep = ";")
 x = grep("([.]0[1-9][.])", fil$DATE, perl = FALSE, value = F)
 zap = fil
 fil = fil[-x,]
@@ -36,7 +36,7 @@ for (i in 1:(length(indeks)))
 }
 
 fil = fil[-indeks,]
-fil2 = fil[,2:45]
+fil2 = fil[,2:47]
 d = data.frame ( diff (as.matrix(fil2)))
 b = fil2[-nrow(fil2),]
 r = d/b 
@@ -101,7 +101,7 @@ g1 = g +geom_smooth(method = "lm", color = "blue") #Adds regression line to poin
 
 
 ###
-subE = subset(r2, Year <2006 & RRA == "TH")
+subE = subset(r2, Year <2006 & RRA == "T")
 subE = subE[,-c(1,54,48,49,47,46)]
 subE[subE > 20] = NA
 ####
@@ -110,7 +110,13 @@ subE[subE > 20] = NA
 lm(r2$CF_CASH_FROM_OPER+r2$EXPLORATION_COST+r2$FINDING_COST_BOE+r2$BS_LT_BORROW+r2$CAPEX_TO_TOTAL_ASSETS+r2$E.P_CAPITAL_EXPENDITURES+r2$CAPITAL_EXPEND+r2$SUCCESS_RATE+r2$PRODUCTIVE_GAS_WELLS_GROSS+r2$PRODUCTIVE_OIL_WELLS_GROSS
 +r2$DEVEL_WELLS_DRILLED_NET_US+r2$EXPLOR_WELLS_DRILLED_NET_US+r2$PRODUCTIVE_OIL_WELLS_NET_US+r2$PRODUCTIVE_OIL_WELLS_GROSS_US+r2$DEVEL_WELLS_DRILLED_GROSS_US
 +r2$PRODUCTIVE_GAS_WELLS_NET_US+r2$PRODUCTIVE_GAS_WELLS_GROSS_US+r2$EXPLOR_WELLS_DRILLED_NET+r2$DEVEL_WELLS_DRILLED_NET+r2$PRODUCTIVE_GAS_WELLS_NET
-+r2$PRODUCTIVE_OIL_WELLS_NET+r2$+r2$DAILY_PROD_MBOE_US+r2$TOTAL_PRODUCTION_MMBOE+r2$BOE_RESERVES_END_YR_US+r2$BOE_END_YEAR_WORLD+r2$GAS_PRODUCTION_US_MMCF_DY
++r2$PRODUCTIVE_OIL_WELLS_NET+r2$DAILY_PROD_MBOE_US+r2$TOTAL_PRODUCTION_MMBOE+r2$BOE_RESERVES_END_YR_US+r2$BOE_END_YEAR_WORLD+r2$GAS_PRODUCTION_US_MMCF_DY
 +r2$GAS_PRODUCTION_WORLD_MMCF_DY+r2$OIL_PRODUCTION_US_MBBL_DY+r2$OIL_PRODUCTION_WORLD_MBBL_DY+r2$GAS_RESERVES_END_YR_US+r2$GAS_END_YEAR_WORLD+r2$OIL_RESERVES_END_YEAR_WORLDWIDE
 +r2$OIL_RESERVES_END_YR_US+r2$RESERVE_REPLACEMENT_BOE)
+
+x = tapply(dat$PDRTotal,dat$Year, FUN = sum) #Year-category, PDRTotal = will be summed
+
+
+library(fUnitRoots)
+adfTest(fil$X24.875) #Does well with NAs compared to adf.test() from "tseries" package
 

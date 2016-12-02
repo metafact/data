@@ -8,3 +8,14 @@ I pooled regresjonen, er det mange outliers ->kansjke slette for f?? bedre regre
 Tried to regress for Successful Efforts and Full-Cost methods separately and no significant results.
 
 ###
+
+###29.11.2016###
+1. Regressed with annual EIA data, for Proved reserves. Significant for the overall period but not for sub-periods16*(2006-2015 and before 200)
+2. 
+
+###01.12.2016###
+1.Regressed on Prod/Res for Us and Prod/Res World -> No significance (data used is Pooled frm Bloomber)
+
+###02.12.2016###
+1. Splitted into subperiods and regressed -> no significance for reserves or production for <2005 subperiod
+2. OLS and assumption of Unit root for series in order for regression to be valid (see Unit Root Wiki)
