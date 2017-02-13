@@ -13,3 +13,6 @@ that Commit
 
 --You have to have a REPO with exactly the same name as a REMOTE locally on you machine in order to Pull the Remote 
 changes
+
+
+A. All commands here -> https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html

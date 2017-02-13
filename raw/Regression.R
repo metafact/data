@@ -118,5 +118,5 @@ x = tapply(dat$PDRTotal,dat$Year, FUN = sum) #Year-category, PDRTotal = will be 
 
 
 library(fUnitRoots)
-adfTest(fil$X24.875) #Does well with NAs compared to adf.test() from "tseries" package
+adfTest(fil$X24.875) #Does well with NAs compared to adf.test() from tseries"
 
