@@ -1,3 +1,23 @@
+%{
+
+This change has been incorporated into the documentation in Release 2011a (R2011a). For previous releases, read below for any additional information:
+
+To get the static data from a list, you can type :
+
+x = fetch(datastream_connection,'LFRCAC40~REP','P')
+or
+
+x = fetch(datastream_connection,'LFRCAC40~REP~=P')
+The REP is needed to denote a static report. This is a Datastream specific syntax.
+
+NAME, SECD, and ISIN are some examples of the static fields and need to be requested
+
+with the '~REP' flag:
+
+data = fetch(datastream_connection,{'IBM~REP'}, {'NAME'});
+%}
+
+
 
 Connect = datastream('DS:User1','Pass1','Datastream','http://dataworks.thomson.com/Dataworks/Enterprise/1.0')
 d = fetch(Connect, {'SP5SOGE','SP5SIOG', 'S&PCOMP'}, 'PI', '12/31/1980', '12/31/2015', 'Q' ) %SP5SOGE -Exploration and Production, SP5IOG -Integrated, 
