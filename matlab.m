@@ -17,6 +17,7 @@ with the '~REP' flag:
 data = fetch(datastream_connection,{'IBM~REP'}, {'NAME'});
 %}
 
+% EDIT <FUNCTION NAME> => to see the source code of the function
 
 
 Connect = datastream('DS:User1','Pass1','Datastream','http://dataworks.thomson.com/Dataworks/Enterprise/1.0')
