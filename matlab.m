@@ -19,6 +19,9 @@ data = fetch(datastream_connection,{'IBM~REP'}, {'NAME'});
 
 % EDIT <FUNCTION NAME> => to see the source code of the function
 
+T = readtable(filename) % Can read Excel data and probably the most convenient way
+save('Data.mat', 'T')  % 'T' works like a handle for this object
+
 edit blsimpv  %lets to see the source code of the function
 
 
