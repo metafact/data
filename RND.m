@@ -1,5 +1,5 @@
 
-
+%21.03.2017
 E = cell(1,3)
 dinfo = dir('*.CSV');
 for K = 1 : length(dinfo)
