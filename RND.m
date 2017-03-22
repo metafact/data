@@ -27,14 +27,14 @@ C = intersect(op,pp)
 [~, loc] = ismember(R,W) %R is concatened cell array of options and W is for futures, this function assignes index from W array 
 %for each element from array R
 lo = loc(loc ~= 0) %deletes elements with zeros
-
+lo = find(loc ~= 0) % the same as previuos command. It obtains indicies where 'loc' elements are not zero
 
 %Next three lines are for preparing R array
-z = loc(loc == 0)
+z = find(loc == 0)
 i = 1:length(R)
 i(z) = [] %deletes indeces where elements are zeros
 
-lo = find(loc ~= 0) % the same as two previuos commands. It obtains indicies where 'loc' elements are not zero
+
 
 Rr = R(i)
 Ww = W(lo)
@@ -47,5 +47,30 @@ K = A(:,8:11)
 K = str2num(K)/100
 
 S = F{6}(lo) -K
+%%%%%%%%%
+
+%1. How to match for Letters of Months
+for i = 1:length(A)
+	switch A(i)
+		case 'Z'
+			D (i) = 
+if 
+
+%2. Aproxaimte with barone Adesi and Whaley
+
+%3. Read for the all CL/CB options and Futures
 
 
+E{4} = [] % creates 4th cell array as a column to original E cell array
+C = cell(11996,1) % creates cell array with 11996X1 dims
+C(:) = {'String'}  %adds STRING elements to cell array, so ellemens are all the same
+
+v = 0.03
+m=repmat(v,10889,1) %creates 10889x1 array with the same v element repeating everywhere
+
+[row, col] = find(isnan(YourMatrix)) % Look for NaN elements in array
+
+plt3(x,y,z, '.', 'MarkerSize', 50) %Plots 3D graph without any functional specifications, '.' is a point plotting 
+grid on								% and MarkerSize is usual size of a point
+
+%fig2plotly() : COOL 3D PLOT FOR MATLAB

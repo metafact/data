@@ -19,6 +19,11 @@ data = fetch(datastream_connection,{'IBM~REP'}, {'NAME'});
 
 % EDIT <FUNCTION NAME> => to see the source code of the function
 
+
+fileID = fopen(filename);
+C = textscan(fileID,'%f %f %f %f %u8 %f','Delimiter',',','EmptyValue',-Inf) % TO read files (csv) as well where strings
+																			%and numbers are present https://se.mathworks.com/help/matlab/ref/textscan.html
+
 T = readtable(filename) % Can read Excel data and probably the most convenient way
 save('Data.mat', 'T')  % 'T' works like a handle for this object
 
