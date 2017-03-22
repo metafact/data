@@ -70,7 +70,7 @@ m=repmat(v,10889,1) %creates 10889x1 array with the same v element repeating eve
 
 [row, col] = find(isnan(YourMatrix)) % Look for NaN elements in array
 
-plt3(x,y,z, '.', 'MarkerSize', 50) %Plots 3D graph without any functional specifications, '.' is a point plotting 
+plot3(x,y,z, '.', 'MarkerSize', 50) %Plots 3D graph without any functional specifications, '.' is a point plotting 
 grid on								% and MarkerSize is usual size of a point
 
 %fig2plotly() : COOL 3D PLOT FOR MATLAB
