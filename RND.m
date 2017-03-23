@@ -1,4 +1,64 @@
 
+Opt = cell(1,3)
+Fut = cell(1,8)
+dinfo = dir('*.CSV');
+for K = 1 : length(dinfo)
+  thisfilename = dinfo(K).name; %just the name
+  if length(dinfo(K).name) > 12 
+      fileID = fopen(thisfilename)
+      O = textscan(fileID,'%s %s %f', 'Delimiter',',')
+      fclose(fileID)
+        for i = 1:3
+            Opt{i} = [Opt{i}; O{i}]
+        end 
+  else
+      fileID = fopen(thisfilename)
+      F = textscan(fileID,'%s %s %f %f %f %f %f %f', 'Delimiter',',')
+      fclose(fileID)
+        for i = 1:8
+            Fut{i} = [Fut{i}; F{i}]
+        end 
+  end
+end
+
+tic
+parpool('local',4) %%%
+dinfo = dir('*.CSV');
+Opt = cell(1,3, length(dinfo))
+O = cell(1,3)
+parfor K = 1 : length(dinfo)
+  thisfilename = dinfo(K).name; %just the name
+  if length(dinfo(K).name) > 12 
+      fileID = fopen(thisfilename)
+      Opt(:,:,K) = textscan(fileID,'%s %s %f', 'Delimiter',',')
+      fclose(fileID)
+            
+  end
+end
+delete(gcp('nocreate'))
+toc
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+tic
+parpool('local',4) %%%
+dinfo = dir('*.CSV');
+Opt = cell(1,3, length(dinfo))
+O = cell(1,3)
+parfor K = 1 : length(dinfo)
+  thisfilename = dinfo(K).name; %just the name
+  if length(dinfo(K).name) > 12 
+      fileID = fopen(thisfilename)
+      Opt(:,:,K) = textscan(fileID,'%s %s %f', 'Delimiter',',')
+      fclose(fileID)
+            
+  end
+end
+delete(gcp('nocreate'))
+toc
+
+
 %21.03.2017
 E = cell(1,3)
 dinfo = dir('*.CSV');
@@ -23,28 +83,54 @@ C = intersect(op,pp)
 -cellfun
 -accumarray
 
+optC = strcat(opt{1}, opt{2})
 
-[~, loc] = ismember(R,W) %R is concatened cell array of options and W is for futures, this function assignes index from W array 
+
+%%%%%%%%%%%%
+opReg = regexprep(opt{1}(1:end-1), '.{5}$','')
+optC = strcat(opReg, opt{2}) % Because there is some sign at the 'end' index
+futC = strcat(fut{1}(1:end-1), fut{2})
+
+
+[~, loc] = ismember(optC,futC) %R is concatened cell array of options and W is for futures, this function assignes index from W array 
 %for each element from array R
 lo = loc(loc ~= 0) %deletes elements with zeros
 lo = find(loc ~= 0) % the same as previuos command. It obtains indicies where 'loc' elements are not zero
 
 %Next three lines are for preparing R array
 z = find(loc == 0)
-i = 1:length(R)
-i(z) = [] %deletes indeces where elements are zeros
+i = 1:length(optC);
+i(z) = []; %deletes indeces where elements are zeros
 
 
 
-Rr = R(i)
-Ww = W(lo)
+optCor = optC(i);
+futCor = futC(lo);
 
-isequal(Rr,Ww) = 1 %1 if they are equal
+isequal(optCor,futCor) %1 if they are equal
 
 %Now get Strikes
-A = cell2mat(E{1}(i))
-K = A(:,8:11)
-K = str2num(K)/100
+A = cell2mat(optC(i))
+K = A(:,8:11);
+K = str2num(K)/100;
+
+Ma = cell2mat((opt{1}(1:end-1)));
+Ma = Ma(:,3:7);
+ Mat = regexprep(Ma, 'Z', '/11/19');
+
+ %{
+ SOME MANIPULATION WITH ONE YEAR SUBSTRACTION
+ 
+ t  = datenum('2009/11/19') ->get date to number
+t= addtodate(t, -1, 'year') -> substracts one year 
+ datestr(t) -> returns to string format
+ 
+ %}
+
+
+
+
+
 
 S = F{6}(lo) -K
 %%%%%%%%%
@@ -74,3 +160,9 @@ plot3(x,y,z, '.', 'MarkerSize', 50) %Plots 3D graph without any functional speci
 grid on								% and MarkerSize is usual size of a point
 
 %fig2plotly() : COOL 3D PLOT FOR MATLAB
+
+
+%%% BASH COMMAND FOR REPLACING SOME TEXT
+gc myFile.txt) -replace 'foo', 'bar' | Out-File myFile.txt"
+%%%
+
