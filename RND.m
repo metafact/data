@@ -86,16 +86,23 @@ C = intersect(op,pp)
 optC = strcat(opt{1}, opt{2})
 
 
-%%%%%%%%%%%%
+%%%%%%%%%%%%!!!!!!!!!START
+ fid = fopen('new.csv')
+      opt = textscan(fid,'%s %s %f', 'Delimiter',',')
+ fclose(fid)
+ 
+ fid = fopen('fut.csv')
+      fut = textscan(fid,'%s %s %f %f %f %f %f %f', 'Delimiter',',')
+ fclose(fid)
 opReg = regexprep(opt{1}(1:end-1), '.{5}$','')
-optC = strcat(opReg, opt{2}) % Because there is some sign at the 'end' index
-futC = strcat(fut{1}(1:end-1), fut{2})
+optC = strcat(opReg, opt{2}); % Because there is some sign at the 'end' index
+futC = strcat(fut{1}(1:end-1), fut{2});
 
 
 [~, loc] = ismember(optC,futC) %R is concatened cell array of options and W is for futures, this function assignes index from W array 
 %for each element from array R
-lo = loc(loc ~= 0) %deletes elements with zeros
-lo = find(loc ~= 0) % the same as previuos command. It obtains indicies where 'loc' elements are not zero
+lo = loc(loc ~= 0); %deletes elements with zeros
+%lo = find(loc ~= 0) % the same as previuos command. It obtains indicies where 'loc' elements are not zero
 
 %Next three lines are for preparing R array
 z = find(loc == 0)
@@ -103,21 +110,48 @@ i = 1:length(optC);
 i(z) = []; %deletes indeces where elements are zeros
 
 
-
+%TO CHECK IF BOTH ARE EQUAL
 optCor = optC(i);
 futCor = futC(lo);
-
 isequal(optCor,futCor) %1 if they are equal
 
 %Now get Strikes
-A = cell2mat(optC(i))
+A = cell2mat(opt{1}(i));
 K = A(:,8:11);
 K = str2num(K)/100;
 
-Ma = cell2mat((opt{1}(1:end-1)));
-Ma = Ma(:,3:7);
- Mat = regexprep(Ma, 'Z', '/11/19');
+%Ma = cell2mat((opt{1}(1:end-1)));
+%Ma = Ma(:,3:7);
+Ma = opt{1}(i)
+Mat = regexprep(Ma, 'Z', '/11/19');
+Mat1 = regexprep(Mat, 'K', '/04/19');
+Mat2 = regexprep(Mat1, 'G', '/01/19');
+Mat3 = regexprep(Mat2, 'H', '/02/19');
+Mat4 = regexprep(Mat3, 'J', '/03/19');
+Mat5 = regexprep(Mat4, 'M', '/05/19');
+Mat6 = regexprep(Mat5, 'N', '/06/19');
+Mat7 = regexprep(Mat6, 'Q', '/07/19');
+Mat8 = regexprep(Mat7, 'U', '/08/19');
+Mat9 = regexprep(Mat8, 'V', '/09/19');
+Mat10 = regexprep(Mat9, 'X', '/10/19');
+Mat11 = regexprep(Mat10, 'F', '/12/19');
 
+j = contains(Mat11, '/12/19')
+last = cell2mat(Mat11);
+last = last(:,3:12);
+t  = last(j,:)
+ar = str2num(t(:,1:4))
+arM1 = ar-1
+arM1 = num2str(arM1)
+dat = strcat(arM1, t(:,5:end))
+last(j,:) = dat
+
+%MAKE A FINAL TABLE
+ T = table(fut{6}(lo), K, opt{3}(i), opt{2}(i), last)
+ save('table.mat', 'T') 
+ writetable(T, 'table.csv')
+
+cellfun(@(d) addtodate(d, -1, 'year'), x)
  %{
  SOME MANIPULATION WITH ONE YEAR SUBSTRACTION
  
@@ -135,7 +169,9 @@ t= addtodate(t, -1, 'year') -> substracts one year
 S = F{6}(lo) -K
 %%%%%%%%%
 
-%1. How to match for Letters of Months
+'
+
+
 for i = 1:length(A)
 	switch A(i)
 		case 'Z'
