@@ -86,6 +86,9 @@ C = intersect(op,pp)
 optC = strcat(opt{1}, opt{2})
 
 
+for K = 1 : length(dinfo)
+thisfilename = dinfo(K).name;
+dinfo = dir('*.CSV');
 %%%%%%%%%%%%!!!!!!!!!START
  fid = fopen('new.csv')
       opt = textscan(fid,'%s %s %f', 'Delimiter',',')
@@ -202,3 +205,80 @@ grid on								% and MarkerSize is usual size of a point
 gc myFile.txt) -replace 'foo', 'bar' | Out-File myFile.txt"
 %%%
 
+%%%%%%%%%%%%{
+dinfo = dir('*.CSV');
+tic
+for K = 1 : length(dinfo)
+    thisfilename = dinfo(K).name;
+     fid = fopen(thisfilename)
+      opt = textscan(fid,'%s %s %f', 'Delimiter',',')
+     fclose(fid)
+
+     opReg = regexprep(opt{1}, '.{5}$','')
+     optC = strcat(opReg, opt{2}); % Because there is some sign at the 'end' index
+     futC = strcat(fut{1}(1:end-1), fut{2});
+     [~, loc] = ismember(optC,futC)
+     lo = loc(loc ~= 0);
+
+     z = find(loc == 0)
+     i = 1:length(optC);
+     i(z) = [];
+
+     optCor = optC(i);
+    futCor = futC(lo);
+    isequal(optCor,futCor)
+    
+    A = cell2mat(opt{1}(i));
+    K = A(:,8:11);
+    K = str2num(K)/100;
+
+    %Ma = cell2mat((opt{1}(1:end-1)));
+    %Ma = Ma(:,3:7);
+   
+ t = cell2mat(opt{1}(1));
+    n = t(7)
+    
+    switch n
+        case 'Z'
+        tt = strcat(t(3:6), '/11/19')
+        case 'K'
+        tt = strcat(t(3:6), '/04/19')
+        case 'G'
+        tt = strcat(t(3:6), '/01/19')
+        case 'H'
+        tt = strcat(t(3:6), '/02/19')
+        case 'J'
+        tt = strcat(t(3:6),  '/03/19')
+        case 'M'
+        tt = strcat(t(3:6), '/05/19')
+        case 'N'
+        tt = strcat(t(3:6), '/06/19')
+        case 'Q'
+        tt = strcat(t(3:6), '/07/19')
+         case 'U'
+        tt = strcat(t(3:6), '/08/19')
+         case 'V'
+        tt = strcat(t(3:6), '/09/19')
+        case 'X'
+        tt = strcat(t(3:6), '/10/19')
+        case 'F'
+        tt = strcat(num2str(str2num(t(3:6))-1), '/12/19')
+    end
+   rate = repmat(0.04, size(i,2),1)
+   T = table(fut{6}(lo), K, opt{3}(i), cell2mat(opt{2}(i)), repmat(tt, size(i,2),1),rate)
+    vol = {};
+   for j = 1:size(i,2)
+       RateSpec = intenvset('ValuationDate', T.Var4(j,:), 'StartDates', T.Var4(j,:),...
+'EndDates', T.Var5(j,:), 'Rates', T.rate(j), 'Compounding', -1, 'Basis', 1)
+        StockSpec = stockspec(NaN, T.Var1(j), {'continuous'}, 0.1)
+        OptSpec = {'call'};
+        ImpVol =  impvbybaw(RateSpec, StockSpec, T.Var4(j,:), T.Var5(j,:), OptSpec,...
+T.K(j), T.Var3(j))
+        vol = [vol, ImpVol]
+   end 
+   Volat = cell2mat(vol)
+   Volat
+ toc   
+end
+    
+%%%%%%%%%%%%%%%}
