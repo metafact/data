@@ -282,3 +282,32 @@ T.K(j), T.Var3(j))
 end
     
 %%%%%%%%%%%%%%%}
+
+%%%
+
+
+
+S_star = 50
+options = optimoptions('lsqnonlin', 'display', 'none');
+[S_star,resnorm] = lsqnonlin(@funk,S_star,[],[],options);
+
+function fu = funk( S_star )
+
+sigma = 0.2
+r = 0.03
+time = 2
+b = 0.1
+X = 40
+
+sigma_sqr = sigma*sigma;
+time_sqrt = sqrt(time);
+nn = 2*b/sigma_sqr; 
+m = 2*r/sigma_sqr;  
+K = 1-exp(-r*time); 
+q2 = (-(nn-1)+sqrt((nn-1)^2+(4*m/K)))*0.5
+
+d1 = (log(S_star/X)+(b+0.5*sigma_sqr)*time)/(sigma*time_sqrt);
+A2 =  (1-exp((b-r)*time)*normcdf(d1))* (S_star/q2); 
+fu = S_star - X - A2
+end
+%%
