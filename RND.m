@@ -286,7 +286,7 @@ end
 %%%
 
 
-
+%%%%ITERATIONS FOR PRICE_STAR%%%%%
 S_star = 50
 options = optimoptions('lsqnonlin', 'display', 'none');
 [S_star,resnorm] = lsqnonlin(@funk,S_star,[],[],options);
@@ -311,3 +311,36 @@ A2 =  (1-exp((b-r)*time)*normcdf(d1))* (S_star/q2);
 fu = S_star - X - A2
 end
 %%
+
+%%%%%%%%%ESTIMATING VOLATILTIES%%%%%%
+
+sigma = 1
+options = optimoptions('lsqnonlin', 'display', 'none');
+[sigma,resnorm] = lsqnonlin(@volat,sigma,0,[],options); 
+%{
+if F < S_star
+    options = optimoptions('lsqnonlin', 'display', 'none');
+    [sigma,resnorm] = lsqnonlin(@volat,sigma,[],[],options); 
+end
+%}
+function delta = volat(sigma)
+F = 60
+S_star = 62.1693
+r = 0.03
+time = 2
+b = 0.1
+X = 40
+AmPr = 1.8
+
+sigma_sqr = sigma*sigma;
+time_sqrt = sqrt(time);
+nn = 2*b/sigma_sqr; 
+m = 2*r/sigma_sqr;  
+K = 1-exp(-r*time); 
+q2 = (-(nn-1)+sqrt((nn-1)^2+(4*m/K)))*0.5
+
+e1 = (log((F/S_star)/X)+(b+0.5*sigma_sqr)*time)/(sigma*time_sqrt);
+B2 =  ((1-exp((b-r)*time)*normcdf(e1))* ( (F/S_star) /q2))^q2; 
+delta = AmPr -blsprice(S_star, X,r,time, sigma)-B2
+end
+%%%%%%%%%%
