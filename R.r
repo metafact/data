@@ -84,3 +84,21 @@ for(i in 1:20){
 }
 
 
+#####02.04.2017
+
+st = Sys.time()
+library(doParallel)
+registerDoParallel(cores=4)
+
+#3955968
+ 
+vec = foreach(i=1:3955968, .packages='RQuantLib') %dopar% {
+  if ( class(F[[i]][1]) == "numeric")
+  {
+    F[[i]][1]
+  }
+   else
+   {
+      NaN
+   }
+ }
