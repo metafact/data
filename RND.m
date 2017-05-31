@@ -84,11 +84,21 @@ C = intersect(op,pp)
 -accumarray
 
 optC = strcat(opt{1}, opt{2})
+%%%%%%%%%%
+%Reading Interest Rates
+ 
+ fid = fopen('3MTBillsSecMark.csv')
+      Rates = textscan(fid,'%s %f', 'Delimiter',',')
+ fclose(fid)
 
+%%%%%%%%%%
 
 for K = 1 : length(dinfo)
 thisfilename = dinfo(K).name;
 dinfo = dir('*.CSV');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%!!!!!!!!!START
  fid = fopen('new.csv')
       opt = textscan(fid,'%s %s %f', 'Delimiter',',')
@@ -97,11 +107,11 @@ dinfo = dir('*.CSV');
  fid = fopen('fut.csv')
       fut = textscan(fid,'%s %s %f %f %f %f %f %f', 'Delimiter',',')
  fclose(fid)
-opReg = regexprep(opt{1}(1:end-1), '.{5}$','')
+opReg = regexprep(opt{1}(1:end-1), '.{5}$',''); %Replaces last 5 digits
 optC = strcat(opReg, opt{2}); % Because there is some sign at the 'end' index
 futC = strcat(fut{1}(1:end-1), fut{2});
 
-
+%every row in optC is contained in futC
 [~, loc] = ismember(optC,futC) %R is concatened cell array of options and W is for futures, this function assignes index from W array 
 %for each element from array R
 lo = loc(loc ~= 0); %deletes elements with zeros
@@ -139,18 +149,25 @@ Mat9 = regexprep(Mat8, 'V', '/09/19');
 Mat10 = regexprep(Mat9, 'X', '/10/19');
 Mat11 = regexprep(Mat10, 'F', '/12/19');
 
-j = contains(Mat11, '/12/19')
+
+%December maturity manipulation
+j = contains(Mat11, '/12/19');
 last = cell2mat(Mat11);
 last = last(:,3:12);
 t  = last(j,:)
-ar = str2num(t(:,1:4))
-arM1 = ar-1
-arM1 = num2str(arM1)
-dat = strcat(arM1, t(:,5:end))
-last(j,:) = dat
+ar = str2num(t(:,1:4));
+arM1 = ar-1;
+arM1 = num2str(arM1);
+dat = strcat(arM1, t(:,5:end));
+last(j,:) = dat;
 
 %MAKE A FINAL TABLE
- T = table(fut{6}(lo), K, opt{3}(i), opt{2}(i), last)
+ T = table(fut{6}(lo), K, opt{3}(i), opt{2}(i), last);
+ T.Properties.VariableNames{'Var1'} = 'S0';
+ T.Properties.VariableNames{'Var3'} = 'PPrice';
+ T.Properties.VariableNames{'Var4'} = 'Date';
+ T.Properties.VariableNames{'last'} = 'Maturity';
+
  save('table.mat', 'T') 
  writetable(T, 'table.csv')
 

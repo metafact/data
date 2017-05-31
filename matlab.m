@@ -18,7 +18,9 @@ data = fetch(datastream_connection,{'IBM~REP'}, {'NAME'});
 %}
 
 % EDIT <FUNCTION NAME> => to see the source code of the function
+format long g %DISPLAYS FULL NUMBERS WITHOUT e
 
+uiimport('-pastespecial') %To paste from the clipboard
 
 fileID = fopen(filename);
 C = textscan(fileID,'%f %f %f %f %u8 %f','Delimiter',',','EmptyValue',-Inf) % TO read files (csv) as well where strings

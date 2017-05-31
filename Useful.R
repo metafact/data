@@ -1,3 +1,6 @@
+-options(scipen=999) #to disable scientific format of small numbers
+-writeClipboard(as.character(xx$pars)) #To copy to clipboard
+
 -plot(temp$Date, temp$Wells, t = "l", xaxt = "n", ylab = "Number of Wells")
 -par (new = T)
 -plot(temp$xDate temp$Oil, t = "l", col = "red", axes = F, ylab = NA)
