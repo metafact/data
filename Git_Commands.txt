@@ -16,3 +16,8 @@ changes
 
 
 A. All commands here -> https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
+
+———
+- sed -n «2P» < text.csv % Prints 2 line in a file text.csv
+- wc -l text.csv % counts the number of lines in a file text.csv
+- grep -n «3564931» text.csv % searches for which row of text.csv file contains string «3564931» 
